@@ -3,19 +3,19 @@ package printer
 import (
 	"fmt"
 
-	"github.com/fixme_my_friend/hw02_fix_app/types"
+	"github.com/darkblueeggplant/home_work_basic/hw02_fix_app/types"
 )
 
 func PrintStaff(staff []types.Employee) {
-	var str string
+	// var str string
 	for i := 0; i < len(staff); i++ {
-		str = fmt.Sprintf(
-			"User ID: %d; "+
-				"Age: %d; "+
-				"Name: %s; "+
-				"Department ID: %d; ", staff[i].UserID, staff[i].Age, staff[i].FirstName, staff[i].DepartmentID)
-		fmt.Println(str)
+		// str = fmt.Sprintf(
+		// 	"User ID: %d; "+
+		// 		"Age: %d; "+
+		// 		"Name: %s; "+
+		// 		"Department ID: %d; ", staff[i].UserID, staff[i].Age, staff[i].FirstName, staff[i].DepartmentID)
+		fmt.Println(staff[i])
 	}
 
-	fmt.Println(str)
+	// fmt.Println(str)
 }

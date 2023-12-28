@@ -6,25 +6,29 @@ import (
 	"io"
 	"os"
 
-	"github.com/fixme_my_friend/hw02_fix_app/types"
+	"github.com/darkblueeggplant/home_work_basic/hw02_fix_app/types"
 )
 
 func ReadJSON(filePath string, _ int) ([]types.Employee, error) {
 	f, err := os.Open(filePath)
 	if err != nil {
 		fmt.Printf("Error: %v", err)
+		return nil, err
 	}
 
 	bytes, err := io.ReadAll(f)
 	if err != nil {
 		fmt.Printf("Error: %v", err)
-		return nil, nil
+		return nil, err
 	}
 
 	var data []types.Employee
 
 	err = json.Unmarshal(bytes, &data)
-	fmt.Println(err)
+	if err != nil {
+		fmt.Printf("Error: %v", err)
+		return nil, err
+	}
 
 	res := data
 
