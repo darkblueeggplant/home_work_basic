@@ -1,4 +1,4 @@
-module github.com/fixme_my_friend/hw02_fix_app
+module github.com/darkblueeggplant/home_work_basic/hw03_chessboard
 
 go 1.20
 
