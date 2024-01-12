@@ -20,13 +20,21 @@ func main() {
 	fmt.Println(firstBook)
 	secondBook.create(2, "Harry Potter and the Chamber of Secrets", "J. K. Rowling", 1998, 300, 0.5)
 	fmt.Println(secondBook)
+
 	// fmt.Println(firstBook.title)
 	// fmt.Println(secondBook.title)
 
 	fmt.Println(firstBook.get())
 	fmt.Println(secondBook.get())
+
+	books := []Book{
+		{3, "Harry Potter and the Prisoner of Azkaban", "J. K. Rowling", 1999, 300, 0.25},
+		{4, "Harry Potter and the Goblet of Fire", "J. K. Rowling", 2000, 300, 1.0},
+	}
+	fmt.Println(books)
 }
 
+// Реализуйте методы для установки и получения полей структуры
 func (f *Book) create(id int32, title string, author string, year int32, size int32, rate float32) {
 	f.id = id
 	f.title = title
@@ -36,6 +44,7 @@ func (f *Book) create(id int32, title string, author string, year int32, size in
 	f.rate = rate
 }
 
+// Реализуйте методы для установки и получения полей структуры
 func (f *Book) get() (int32, string, string, int32, int32, float32) {
 	return f.id, f.title, f.author, f.year, f.size, f.rate
 }
