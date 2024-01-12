@@ -19,11 +19,11 @@ func chessboard(size int) {
 	finalwhite := ""
 	for i := 0; i < size; i++ {
 		if i%2 == 0 {
-			finalblack = finalblack + black
-			finalwhite = finalwhite + white
+			finalblack += black
+			finalwhite += white
 		} else {
-			finalblack = finalblack + white
-			finalwhite = finalwhite + black
+			finalblack += white
+			finalwhite += black
 		}
 	}
 	// fmt.Println(finalblack)
