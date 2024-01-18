@@ -11,6 +11,12 @@ type Book struct {
 	rate   float32
 }
 
+type Columns struct {
+	year string
+	size string
+	rate string
+}
+
 func main() {
 	// Place your code here.
 
@@ -32,6 +38,14 @@ func main() {
 		{4, "Harry Potter and the Goblet of Fire", "J. K. Rowling", 2000, 300, 1.0},
 	}
 	fmt.Println(books)
+
+	// fmt.Println(isEqual(firstBook, secondBook))
+
+	fromColumns := Columns{}
+	fromColumns.bred("year", firstBook, secondBook)
+	fromColumns.bred("size", firstBook, secondBook)
+	fromColumns.bred("rate", firstBook, secondBook)
+	fromColumns.bred("bred kakoy-to", firstBook, secondBook)
 }
 
 // Реализуйте методы для установки и получения полей структуры
@@ -47,4 +61,41 @@ func (f *Book) create(id int32, title string, author string, year int32, size in
 // Реализуйте методы для установки и получения полей структуры
 func (f *Book) get() (int32, string, string, int32, int32, float32) {
 	return f.id, f.title, f.author, f.year, f.size, f.rate
+}
+
+// func isEqual(x Book, y Book) bool {
+// 	if x.year >= y.year {
+// 		return true
+// 	} else {
+// 		return false
+// 	}
+// }
+
+func (c *Columns) bred(arg string, x Book, y Book) {
+	if arg == "year" {
+		fmt.Println("year was selected")
+		if x.year >= y.year {
+			fmt.Println(x.title, arg, "greater then", y.title, arg)
+		} else {
+			fmt.Println(y.title, arg, "greater then", y.title, arg)
+		}
+
+	} else if arg == "size" {
+		fmt.Println("size was selected")
+		if x.size >= y.size {
+			fmt.Println(x.title, arg, "greater then", y.title, arg)
+		} else {
+			fmt.Println(y.title, arg, "greater then", y.title, arg)
+		}
+	} else if arg == "rate" {
+		fmt.Println("rate was selected")
+		if x.rate >= y.rate {
+			fmt.Println(x.title, arg, "greater then", y.title, arg)
+		} else {
+			fmt.Println(y.title, arg, "greater then", y.title, arg)
+		}
+	} else {
+		fmt.Println("Ny eto je bred kakoy-to")
+	}
+
 }
