@@ -17,7 +17,7 @@ type param struct {
 	field string
 }
 
-// Реализуйте методы для установки и получения полей структуры
+// Реализуйте методы для установки и получения полей структуры.
 func (f *Book) create(id int32, title string, author string, year int32, size int32, rate float32) {
 	f.id = id
 	f.title = title
@@ -27,7 +27,7 @@ func (f *Book) create(id int32, title string, author string, year int32, size in
 	f.rate = rate
 }
 
-// Реализуйте методы для установки и получения полей структуры
+// Реализуйте методы для установки и получения полей структуры.
 func (f *Book) get() (int32, string, string, int32, int32, float32) {
 	return f.id, f.title, f.author, f.year, f.size, f.rate
 }
@@ -38,26 +38,23 @@ func setParam(field string) *param {
 
 func isYearEqual(x int32, y int32) bool {
 	if x > y {
-		return true
-	} else {
-		return false
+		return x > y
 	}
+	return false
 }
 
 func isSizeEqual(x int32, y int32) bool {
 	if x > y {
-		return true
-	} else {
-		return false
+		return x > y
 	}
+	return false
 }
 
 func isRateEqual(x float32, y float32) bool {
 	if x > y {
-		return true
-	} else {
-		return false
+		return x > y
 	}
+	return false
 }
 
 // Реализуйте структуру с методом позволяющим сравнивать книги по полям Year, Size, Rate.
@@ -65,16 +62,19 @@ func isRateEqual(x float32, y float32) bool {
 // Метод принимает 2 книги и выдает true если первый аргумент больше второго и false если наоборот.
 
 func (p param) isEqual(x, y Book) bool {
-	if p.field == "year" {
+	switch p.field {
+	case "year":
 		return isYearEqual(x.year, y.year)
-	} else if p.field == "size" {
+
+	case "size":
 		return isSizeEqual(x.size, y.size)
-	} else if p.field == "rate" {
+
+	case "rate":
 		return isRateEqual(x.rate, y.rate)
-	} else {
+
+	default:
 		return false
 	}
-
 }
 
 func main() {
@@ -102,4 +102,5 @@ func main() {
 	fmt.Println(param.isEqual(*setParam("year"), firstBook, secondBook))
 	fmt.Println(param.isEqual(*setParam("size"), firstBook, secondBook))
 	fmt.Println(param.isEqual(*setParam("rate"), firstBook, secondBook))
+	fmt.Println(param.isEqual(*setParam("blahblahblah"), firstBook, secondBook))
 }
