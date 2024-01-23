@@ -1,6 +1,8 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 type Book struct {
 	id     int32
@@ -11,10 +13,68 @@ type Book struct {
 	rate   float32
 }
 
-type Columns struct {
-	year string
-	size string
-	rate string
+type param struct {
+	field string
+}
+
+// Реализуйте методы для установки и получения полей структуры
+func (f *Book) create(id int32, title string, author string, year int32, size int32, rate float32) {
+	f.id = id
+	f.title = title
+	f.author = author
+	f.year = year
+	f.size = size
+	f.rate = rate
+}
+
+// Реализуйте методы для установки и получения полей структуры
+func (f *Book) get() (int32, string, string, int32, int32, float32) {
+	return f.id, f.title, f.author, f.year, f.size, f.rate
+}
+
+func setParam(field string) *param {
+	return &param{field: field}
+}
+
+func isYearEqual(x int32, y int32) bool {
+	if x > y {
+		return true
+	} else {
+		return false
+	}
+}
+
+func isSizeEqual(x int32, y int32) bool {
+	if x > y {
+		return true
+	} else {
+		return false
+	}
+}
+
+func isRateEqual(x float32, y float32) bool {
+	if x > y {
+		return true
+	} else {
+		return false
+	}
+}
+
+// Реализуйте структуру с методом позволяющим сравнивать книги по полям Year, Size, Rate.
+// Выбор режима сравнения задается в конструкторе структуры через перечисление (enum).
+// Метод принимает 2 книги и выдает true если первый аргумент больше второго и false если наоборот.
+
+func (p param) isEqual(x, y Book) bool {
+	if p.field == "year" {
+		return isYearEqual(x.year, y.year)
+	} else if p.field == "size" {
+		return isSizeEqual(x.size, y.size)
+	} else if p.field == "rate" {
+		return isRateEqual(x.rate, y.rate)
+	} else {
+		return false
+	}
+
 }
 
 func main() {
@@ -33,69 +93,13 @@ func main() {
 	fmt.Println(firstBook.get())
 	fmt.Println(secondBook.get())
 
-	books := []Book{
-		{3, "Harry Potter and the Prisoner of Azkaban", "J. K. Rowling", 1999, 300, 0.25},
-		{4, "Harry Potter and the Goblet of Fire", "J. K. Rowling", 2000, 300, 1.0},
-	}
-	fmt.Println(books)
+	// books := []Book{
+	// 	{3, "Harry Potter and the Prisoner of Azkaban", "J. K. Rowling", 1999, 300, 0.25},
+	// 	{4, "Harry Potter and the Goblet of Fire", "J. K. Rowling", 2000, 300, 1.0},
+	// }
+	// fmt.Println(books)
 
-	// fmt.Println(isEqual(firstBook, secondBook))
-
-	fromColumns := Columns{}
-	fromColumns.bred("year", firstBook, secondBook)
-	fromColumns.bred("size", firstBook, secondBook)
-	fromColumns.bred("rate", firstBook, secondBook)
-	fromColumns.bred("bred kakoy-to", firstBook, secondBook)
-}
-
-// Реализуйте методы для установки и получения полей структуры
-func (f *Book) create(id int32, title string, author string, year int32, size int32, rate float32) {
-	f.id = id
-	f.title = title
-	f.author = author
-	f.year = year
-	f.size = size
-	f.rate = rate
-}
-
-// Реализуйте методы для установки и получения полей структуры
-func (f *Book) get() (int32, string, string, int32, int32, float32) {
-	return f.id, f.title, f.author, f.year, f.size, f.rate
-}
-
-// func isEqual(x Book, y Book) bool {
-// 	if x.year >= y.year {
-// 		return true
-// 	} else {
-// 		return false
-// 	}
-// }
-
-func (c *Columns) bred(arg string, x Book, y Book) {
-	if arg == "year" {
-		fmt.Println("year was selected")
-		if x.year >= y.year {
-			fmt.Println(x.title, arg, "greater then", y.title, arg)
-		} else {
-			fmt.Println(y.title, arg, "greater then", y.title, arg)
-		}
-
-	} else if arg == "size" {
-		fmt.Println("size was selected")
-		if x.size >= y.size {
-			fmt.Println(x.title, arg, "greater then", y.title, arg)
-		} else {
-			fmt.Println(y.title, arg, "greater then", y.title, arg)
-		}
-	} else if arg == "rate" {
-		fmt.Println("rate was selected")
-		if x.rate >= y.rate {
-			fmt.Println(x.title, arg, "greater then", y.title, arg)
-		} else {
-			fmt.Println(y.title, arg, "greater then", y.title, arg)
-		}
-	} else {
-		fmt.Println("Ny eto je bred kakoy-to")
-	}
-
+	fmt.Println(param.isEqual(*setParam("year"), firstBook, secondBook))
+	fmt.Println(param.isEqual(*setParam("size"), firstBook, secondBook))
+	fmt.Println(param.isEqual(*setParam("rate"), firstBook, secondBook))
 }
