@@ -13,67 +13,75 @@ type Book struct {
 	rate   float32
 }
 
-type param struct {
-	field string
+type Fields struct {
+	byYear int
+	bySize int
+	byRate int
 }
 
 // Реализуйте методы для установки и получения полей структуры.
-func (f *Book) create(id int32, title string, author string, year int32, size int32, rate float32) {
+
+func (f *Book) setID(id int32) {
 	f.id = id
+}
+
+func (f *Book) setTitle(title string) {
 	f.title = title
+}
+
+func (f *Book) setAuthor(author string) {
 	f.author = author
+}
+
+func (f *Book) setYear(year int32) {
 	f.year = year
+}
+
+func (f *Book) setSize(size int32) {
 	f.size = size
+}
+
+func (f *Book) setRate(rate float32) {
 	f.rate = rate
 }
 
 // Реализуйте методы для установки и получения полей структуры.
-func (f *Book) get() (int32, string, string, int32, int32, float32) {
-	return f.id, f.title, f.author, f.year, f.size, f.rate
+
+func (f Book) getID() int32 {
+	return f.id
 }
 
-func setParam(field string) *param {
-	return &param{field: field}
+func (f Book) getTitle() string {
+	return f.title
 }
 
-func isYearEqual(x int32, y int32) bool {
-	if x > y {
-		return x > y
-	}
-	return false
+func (f Book) getAuthor() string {
+	return f.author
 }
 
-func isSizeEqual(x int32, y int32) bool {
-	if x > y {
-		return x > y
-	}
-	return false
+func (f Book) getYear() int32 {
+	return f.year
 }
 
-func isRateEqual(x float32, y float32) bool {
-	if x > y {
-		return x > y
-	}
-	return false
+func (f Book) getSize() int32 {
+	return f.size
+}
+
+func (f Book) getRate() float32 {
+	return f.rate
 }
 
 // Реализуйте структуру с методом позволяющим сравнивать книги по полям Year, Size, Rate.
 // Выбор режима сравнения задается в конструкторе структуры через перечисление (enum).
 // Метод принимает 2 книги и выдает true если первый аргумент больше второго и false если наоборот.
 
-func (p param) isEqual(x, y Book) bool {
-	switch p.field {
-	case "year":
-		return isYearEqual(x.year, y.year)
+func fieldsConstructor(byYear, bySize, byRate int) *Fields {
+	return &Fields{byYear: byYear, bySize: bySize, byRate: byRate}
+}
 
-	case "size":
-		return isSizeEqual(x.size, y.size)
-
-	case "rate":
-		return isRateEqual(x.rate, y.rate)
-
-	default:
-		return false
+func (p *Fields) isYearEqual() {
+	if p.byYear != 0 {
+		fmt.Println("We will compare by year")
 	}
 }
 
@@ -82,25 +90,28 @@ func main() {
 
 	firstBook := Book{}
 	secondBook := Book{}
-	firstBook.create(1, "Harry Potter and the Philosopher's Stone", "J. K. Rowling", 1997, 300, 0.7)
+	firstBook.setID(1)
+	firstBook.setTitle("Harry Potter and the Philosopher's Stone")
+	firstBook.setAuthor("J. K. Rowling")
+	firstBook.setYear(1997)
+	firstBook.setSize(300)
+	firstBook.setRate(0.7)
 	fmt.Println(firstBook)
-	secondBook.create(2, "Harry Potter and the Chamber of Secrets", "J. K. Rowling", 1998, 300, 0.5)
+	secondBook.setID(2)
+	secondBook.setTitle("Harry Potter and the Chamber of Secrets")
+	secondBook.setAuthor("J. K. Rowling")
+	secondBook.setYear(1998)
+	secondBook.setSize(300)
+	secondBook.setRate(0.5)
 	fmt.Println(secondBook)
 
-	// fmt.Println(firstBook.title)
-	// fmt.Println(secondBook.title)
+	fmt.Println(firstBook.getID())
+	fmt.Println(firstBook.getTitle())
+	fmt.Println(firstBook.getAuthor())
+	fmt.Println(firstBook.getYear())
+	fmt.Println(firstBook.getSize())
+	fmt.Println(firstBook.getRate())
 
-	fmt.Println(firstBook.get())
-	fmt.Println(secondBook.get())
-
-	// books := []Book{
-	// 	{3, "Harry Potter and the Prisoner of Azkaban", "J. K. Rowling", 1999, 300, 0.25},
-	// 	{4, "Harry Potter and the Goblet of Fire", "J. K. Rowling", 2000, 300, 1.0},
-	// }
-	// fmt.Println(books)
-
-	fmt.Println(param.isEqual(*setParam("year"), firstBook, secondBook))
-	fmt.Println(param.isEqual(*setParam("size"), firstBook, secondBook))
-	fmt.Println(param.isEqual(*setParam("rate"), firstBook, secondBook))
-	fmt.Println(param.isEqual(*setParam("blahblahblah"), firstBook, secondBook))
+	field := fieldsConstructor(1, 0, 0)
+	field.isYearEqual()
 }
