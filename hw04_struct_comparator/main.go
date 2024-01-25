@@ -69,6 +69,27 @@ func (f Book) Rate() float32 {
 	return f.rate
 }
 
+func isYearEqual(x int32, y int32) bool {
+	if x > y {
+		return x > y
+	}
+	return false
+}
+
+func isSizeEqual(x int32, y int32) bool {
+	if x > y {
+		return x > y
+	}
+	return false
+}
+
+func isRateEqual(x float32, y float32) bool {
+	if x > y {
+		return x > y
+	}
+	return false
+}
+
 // Реализуйте структуру с методом позволяющим сравнивать книги по полям Year, Size, Rate.
 // Выбор режима сравнения задается в конструкторе структуры через перечисление (enum).
 // Метод принимает 2 книги и выдает true если первый аргумент больше второго и false если наоборот.
@@ -77,9 +98,19 @@ func NewComparator(fieldCompare string) *Comparator {
 	return &Comparator{fieldCompare: fieldCompare}
 }
 
-func (p *Comparator) isEqual() {
-	if p.fieldCompare == "year" {
-		fmt.Println("We will compare by year")
+func (p *Comparator) isEqual(x, y Book) bool {
+	switch p.fieldCompare {
+	case "year":
+		return isYearEqual(x.year, y.year)
+
+	case "size":
+		return isSizeEqual(x.size, y.size)
+
+	case "rate":
+		return isRateEqual(x.rate, y.rate)
+
+	default:
+		return false
 	}
 }
 
@@ -111,5 +142,8 @@ func main() {
 	fmt.Println(firstBook.Rate())
 
 	comparator := NewComparator("year")
-	comparator.isEqual()
+	fmt.Println(comparator.isEqual(firstBook, secondBook))
+
+	comparator = NewComparator("rate")
+	fmt.Println(comparator.isEqual(firstBook, secondBook))
 }
