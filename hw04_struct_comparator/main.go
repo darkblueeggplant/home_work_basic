@@ -13,61 +13,59 @@ type Book struct {
 	rate   float32
 }
 
-type Fields struct {
-	byYear int
-	bySize int
-	byRate int
+type Comparator struct {
+	fieldCompare string
 }
 
 // Реализуйте методы для установки и получения полей структуры.
 
-func (f *Book) setID(id int32) {
+func (f *Book) SetID(id int32) {
 	f.id = id
 }
 
-func (f *Book) setTitle(title string) {
+func (f *Book) SetTitle(title string) {
 	f.title = title
 }
 
-func (f *Book) setAuthor(author string) {
+func (f *Book) SetAuthor(author string) {
 	f.author = author
 }
 
-func (f *Book) setYear(year int32) {
+func (f *Book) SetYear(year int32) {
 	f.year = year
 }
 
-func (f *Book) setSize(size int32) {
+func (f *Book) SetSize(size int32) {
 	f.size = size
 }
 
-func (f *Book) setRate(rate float32) {
+func (f *Book) SetRate(rate float32) {
 	f.rate = rate
 }
 
 // Реализуйте методы для установки и получения полей структуры.
 
-func (f Book) getID() int32 {
+func (f Book) ID() int32 {
 	return f.id
 }
 
-func (f Book) getTitle() string {
+func (f Book) Title() string {
 	return f.title
 }
 
-func (f Book) getAuthor() string {
+func (f Book) Author() string {
 	return f.author
 }
 
-func (f Book) getYear() int32 {
+func (f Book) Year() int32 {
 	return f.year
 }
 
-func (f Book) getSize() int32 {
+func (f Book) Size() int32 {
 	return f.size
 }
 
-func (f Book) getRate() float32 {
+func (f Book) Rate() float32 {
 	return f.rate
 }
 
@@ -75,12 +73,12 @@ func (f Book) getRate() float32 {
 // Выбор режима сравнения задается в конструкторе структуры через перечисление (enum).
 // Метод принимает 2 книги и выдает true если первый аргумент больше второго и false если наоборот.
 
-func fieldsConstructor(byYear, bySize, byRate int) *Fields {
-	return &Fields{byYear: byYear, bySize: bySize, byRate: byRate}
+func NewComparator(fieldCompare string) *Comparator {
+	return &Comparator{fieldCompare: fieldCompare}
 }
 
-func (p *Fields) isYearEqual() {
-	if p.byYear != 0 {
+func (p *Comparator) isEqual() {
+	if p.fieldCompare == "year" {
 		fmt.Println("We will compare by year")
 	}
 }
@@ -90,28 +88,28 @@ func main() {
 
 	firstBook := Book{}
 	secondBook := Book{}
-	firstBook.setID(1)
-	firstBook.setTitle("Harry Potter and the Philosopher's Stone")
-	firstBook.setAuthor("J. K. Rowling")
-	firstBook.setYear(1997)
-	firstBook.setSize(300)
-	firstBook.setRate(0.7)
+	firstBook.SetID(1)
+	firstBook.SetTitle("Harry Potter and the Philosopher's Stone")
+	firstBook.SetAuthor("J. K. Rowling")
+	firstBook.SetYear(1997)
+	firstBook.SetSize(300)
+	firstBook.SetRate(0.7)
 	fmt.Println(firstBook)
-	secondBook.setID(2)
-	secondBook.setTitle("Harry Potter and the Chamber of Secrets")
-	secondBook.setAuthor("J. K. Rowling")
-	secondBook.setYear(1998)
-	secondBook.setSize(300)
-	secondBook.setRate(0.5)
+	secondBook.SetID(2)
+	secondBook.SetTitle("Harry Potter and the Chamber of Secrets")
+	secondBook.SetAuthor("J. K. Rowling")
+	secondBook.SetYear(1998)
+	secondBook.SetSize(300)
+	secondBook.SetRate(0.5)
 	fmt.Println(secondBook)
 
-	fmt.Println(firstBook.getID())
-	fmt.Println(firstBook.getTitle())
-	fmt.Println(firstBook.getAuthor())
-	fmt.Println(firstBook.getYear())
-	fmt.Println(firstBook.getSize())
-	fmt.Println(firstBook.getRate())
+	fmt.Println(firstBook.ID())
+	fmt.Println(firstBook.Title())
+	fmt.Println(firstBook.Author())
+	fmt.Println(firstBook.Year())
+	fmt.Println(firstBook.Size())
+	fmt.Println(firstBook.Rate())
 
-	field := fieldsConstructor(1, 0, 0)
-	field.isYearEqual()
+	comparator := NewComparator("year")
+	comparator.isEqual()
 }
