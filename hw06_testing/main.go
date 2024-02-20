@@ -5,5 +5,5 @@ import (
 )
 
 func main() {
-	chessboard.PrintStaff()
+	chessboard.PrintSomething()
 }
