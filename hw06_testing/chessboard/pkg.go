@@ -1,5 +1,7 @@
 package chessboard
 
-func PrintSomething(s string) string {
-	return s
+import "fmt"
+
+func PrintSomething() {
+	fmt.Println("Something")
 }
