@@ -1,11 +1,9 @@
 package main
 
 import (
-	"fmt"
-
-	"github.com/darkblueeggplant/home_work_basic/hw06_testing/chessboard"
+	"github.com/darkblueeggplant/home_work_basic/chessboard"
 )
 
 func main() {
-	fmt.Println(chessboard.PrintSomething("Hello,Dummy!"))
+	chessboard.PrintStaff()
 }
