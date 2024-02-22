@@ -3,51 +3,52 @@ package main
 import "fmt"
 
 type Shape interface {
-	calculateArea() (float64, error)
+	Area() (float64, error)
 }
 
 type Circle struct {
-	radius float64
+	Radius float64
 }
+
 type Rectangle struct {
-	width  float64
-	height float64
+	Width  float64
+	Height float64
 }
+
 type Triangle struct {
-	height float64
-	side   float64
+	Height float64
+	Side   float64
 }
 
-type BadShape struct{}
+// type BadShape struct{}
 
-func (b BadShape) calculateArea() (float64, error) {
-	return 0, fmt.Errorf("переданный объект не является фигурой")
-}
+// func (b BadShape) calculateArea() (float64, error) {
+// 	return 0, fmt.Errorf("переданный объект не является фигурой")
+// }
 
-func (c Circle) calculateArea() (float64, error) {
-	if c.radius < 0 {
+func (c *Circle) Area() (float64, error) {
+	if c.Radius < 0 {
 		return 0, fmt.Errorf("задан отрицательный радиус")
 	}
-	return 3.14 * c.radius * c.radius, nil
+	return 3.14 * c.Radius * c.Radius, nil
 }
 
-func (r Rectangle) calculateArea() (float64, error) {
-	if r.height < 0 || r.width < 0 {
+func (r *Rectangle) Area() (float64, error) {
+	if r.Height < 0 || r.Width < 0 {
 		return 0, fmt.Errorf("задано отрицательное значение одной или обеих сторон")
 	}
-	return r.width * r.height, nil
+	return r.Width * r.Height, nil
 }
 
-func (t Triangle) calculateArea() (float64, error) {
-	if t.height < 0 || t.side < 0 {
+func (t *Triangle) Area() (float64, error) {
+	if t.Height < 0 || t.Side < 0 {
 		return 0, fmt.Errorf("задано отрицательное значение основания или высоты")
 	}
-	return 0.5 * t.height * t.side, nil
+	return 0.5 * t.Height * t.Side, nil
 }
 
-func calculateArea(shape Shape) (float64, error) {
-	// return shape.calculateArea()
-	area, err := shape.calculateArea()
+func calculateArea(s Shape) (float64, error) {
+	area, err := s.Area()
 	if err != nil {
 		return 0, err
 	}
@@ -56,51 +57,51 @@ func calculateArea(shape Shape) (float64, error) {
 
 func main() {
 	// Place your code here.
-	circle := Circle{radius: 2}
-	fmt.Println("круг: радиус", circle.radius)
+	circle := Circle{Radius: 2}
+	fmt.Println("круг: радиус", circle.Radius)
 
-	circleArea, err := calculateArea(circle)
+	circleArea, err := calculateArea(&circle)
 	if err != nil {
 		fmt.Println("не могу посчитать площадь: ", err)
 	} else {
 		fmt.Println("площадь: ", circleArea)
 	}
 
-	circleBad := Circle{radius: -3}
-	fmt.Println("круг: радиус", circleBad.radius)
+	// circleBad := Circle{Radius: -3}
+	// fmt.Println("круг: радиус", circleBad.Radius)
 
-	circleBadArea, err := calculateArea(circleBad)
-	if err != nil {
-		fmt.Println("не могу посчитать площадь: ", err)
-	} else {
-		fmt.Println("площадь: ", circleBadArea)
-	}
+	// circleBadArea, err := calculateArea(circleBad)
+	// if err != nil {
+	// 	fmt.Println("не могу посчитать площадь: ", err)
+	// } else {
+	// 	fmt.Println("площадь: ", circleBadArea)
+	// }
 
-	rectangle := Rectangle{width: 3, height: 2}
-	fmt.Println("прямоугольник: ширина", rectangle.width, "высота:", rectangle.height)
+	rectangle := Rectangle{Width: 3, Height: 2}
+	fmt.Println("прямоугольник: ширина", rectangle.Width, "высота:", rectangle.Height)
 
-	rectangleArea, err := calculateArea(rectangle)
+	rectangleArea, err := calculateArea(&rectangle)
 	if err != nil {
 		fmt.Println("не могу посчитать площадь: ", err)
 	} else {
 		fmt.Println("площадь: ", rectangleArea)
 	}
 
-	triangle := Triangle{height: 10, side: 3}
-	fmt.Println("треуголльник: высота", triangle.height, "основание:", triangle.side)
+	triangle := Triangle{Height: 10, Side: 3}
+	fmt.Println("треуголльник: высота", triangle.Height, "основание:", triangle.Side)
 
-	triangleArea, err := calculateArea(triangle)
+	triangleArea, err := calculateArea(&triangle)
 	if err != nil {
 		fmt.Println("не могу посчитать площадь: ", err)
 	} else {
 		fmt.Println("площадь: ", triangleArea)
 	}
 
-	invalidShape := BadShape{}
-	invalidShapeArea, err := calculateArea(invalidShape)
-	if err != nil {
-		fmt.Println("не могу посчитать площадь: ", err)
-	} else {
-		fmt.Println("площадь: ", invalidShapeArea)
-	}
+	// invalidShape := BadShape{}
+	// invalidShapeArea, err := calculateArea(invalidShape)
+	// if err != nil {
+	// 	fmt.Println("не могу посчитать площадь: ", err)
+	// } else {
+	// 	fmt.Println("площадь: ", invalidShapeArea)
+	// }
 }
