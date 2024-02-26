@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"errors"
+	"fmt"
+)
 
 type Shape interface {
 	Area() (float64, error)
@@ -20,11 +23,7 @@ type Triangle struct {
 	Side   float64
 }
 
-// type BadShape struct{}
-
-// func (b BadShape) calculateArea() (float64, error) {
-// 	return 0, fmt.Errorf("переданный объект не является фигурой")
-// }
+type BadShape struct{}
 
 func (c *Circle) Area() (float64, error) {
 	if c.Radius < 0 {
@@ -47,17 +46,17 @@ func (t *Triangle) Area() (float64, error) {
 	return 0.5 * t.Height * t.Side, nil
 }
 
-func calculateArea(s Shape) (float64, error) {
-	area, err := s.Area()
-	if err != nil {
-		return 0, err
+func calculateArea(s any) (float64, error) {
+	shape, isOK := s.(Shape)
+	if !isOK {
+		return 0, errors.New("переданный объект не реализует интерфейс Shape")
 	}
-	return area, nil
+	return shape.Area()
 }
 
 func main() {
 	// Place your code here.
-	circle := Circle{Radius: 2}
+	circle := Circle{Radius: -2}
 	fmt.Println("круг: радиус", circle.Radius)
 
 	circleArea, err := calculateArea(&circle)
@@ -66,16 +65,6 @@ func main() {
 	} else {
 		fmt.Println("площадь: ", circleArea)
 	}
-
-	// circleBad := Circle{Radius: -3}
-	// fmt.Println("круг: радиус", circleBad.Radius)
-
-	// circleBadArea, err := calculateArea(circleBad)
-	// if err != nil {
-	// 	fmt.Println("не могу посчитать площадь: ", err)
-	// } else {
-	// 	fmt.Println("площадь: ", circleBadArea)
-	// }
 
 	rectangle := Rectangle{Width: 3, Height: 2}
 	fmt.Println("прямоугольник: ширина", rectangle.Width, "высота:", rectangle.Height)
@@ -97,11 +86,11 @@ func main() {
 		fmt.Println("площадь: ", triangleArea)
 	}
 
-	// invalidShape := BadShape{}
-	// invalidShapeArea, err := calculateArea(invalidShape)
-	// if err != nil {
-	// 	fmt.Println("не могу посчитать площадь: ", err)
-	// } else {
-	// 	fmt.Println("площадь: ", invalidShapeArea)
-	// }
+	badshape := BadShape{}
+	BadShapeArea, err := calculateArea(&badshape)
+	if err != nil {
+		fmt.Println("не могу посчитать площадь: ", err)
+	} else {
+		fmt.Println("площадь: ", BadShapeArea)
+	}
 }
