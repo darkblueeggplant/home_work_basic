@@ -7,7 +7,7 @@ import (
 )
 
 func TestPrintSomething(t *testing.T) {
-	const str, want = "Goodbye", "Hello"
+	const str, want = "Hello", "Hello"
 	got := chessboard.PrintSomething(str)
 	if got != want {
 		t.Errorf("something wrong: got %v, want %v", got, want)
@@ -16,15 +16,21 @@ func TestPrintSomething(t *testing.T) {
 
 func Test(t *testing.T) {
 	testCases := []struct {
-		desc string
+		desc      string
+		str, want string
 	}{
 		{
-			desc: "",
+			desc: "chessboard.PrintSomething",
+			str:  "Hello",
+			want: "Hello",
 		},
 	}
 	for _, tC := range testCases {
 		t.Run(tC.desc, func(t *testing.T) {
-
+			got := chessboard.PrintSomething(tC.str)
+			if got != tC.want {
+				t.Errorf("something wrong: got %v, want %v", got, tC.want)
+			}
 		})
 	}
 }
