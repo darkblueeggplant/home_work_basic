@@ -58,7 +58,7 @@ func Test(t *testing.T) {
 
 		})
 	}
-	testCasesSC := []struct {
+	testCasesSCS := []struct {
 		desc   string
 		id     int32
 		title  string
@@ -88,16 +88,104 @@ func Test(t *testing.T) {
 		},
 	}
 
-	for _, tC := range testCasesSC {
+	for _, tC := range testCasesSCS {
 		t.Run(tC.desc, func(t *testing.T) {
-			testBook := struct_comparator.Book{}
-			testBook.SetID(tC.id)
-			testBook.SetTitle(tC.title)
-			testBook.SetAuthor(tC.author)
-			testBook.SetYear(tC.year)
-			testBook.SetSize(tC.size)
-			testBook.SetRate(tC.rate)
-			got := testBook
+			testBookSet := struct_comparator.Book{}
+			testBookSet.SetID(tC.id)
+			testBookSet.SetTitle(tC.title)
+			testBookSet.SetAuthor(tC.author)
+			testBookSet.SetYear(tC.year)
+			testBookSet.SetSize(tC.size)
+			testBookSet.SetRate(tC.rate)
+			Sgot := testBookSet
+			if Sgot != tC.want {
+				t.Errorf("something wrong: got %v, want %v", Sgot, tC.want)
+			}
+
+		})
+
+	}
+	//
+	testCasesSCGID := []struct {
+		desc string
+		id   int32
+		want int32
+	}{
+		{
+			desc: "struct_comparator.GettersID",
+			id:   1,
+			want: 1,
+		},
+	}
+	for _, tC := range testCasesSCGID {
+		t.Run(tC.desc, func(t *testing.T) {
+			testBookGet := struct_comparator.Book{
+				Id:     tC.id,
+				Title:  "",
+				Author: "",
+				Year:   0,
+				Size:   0,
+				Rate:   0,
+			}
+			SCGIdgot := testBookGet.ID()
+
+			if SCGIdgot != tC.want {
+				t.Errorf("something wrong: got %v, want %v", SCGIdgot, tC.want)
+			}
+
+		})
+	}
+	testCasesSCGTITLE := []struct {
+		desc  string
+		title string
+		want  string
+	}{
+		{
+			desc:  "struct_comparator.GettersTITLE",
+			title: "Harry Potter and the Philosopher's Stone",
+			want:  "Harry Potter and the Philosopher's Stone",
+		},
+	}
+	for _, tC := range testCasesSCGTITLE {
+		t.Run(tC.desc, func(t *testing.T) {
+			testBookGet := struct_comparator.Book{
+				Id:     0,
+				Title:  tC.title,
+				Author: "",
+				Year:   0,
+				Size:   0,
+				Rate:   0,
+			}
+			SCGTitlegot := testBookGet.TITLE()
+
+			if SCGTitlegot != tC.want {
+				t.Errorf("something wrong: got %v, want %v", SCGTitlegot, tC.want)
+			}
+
+		})
+	}
+	testCasesSCIsEqual := []struct {
+		desc string
+		x    int32
+		y    int32
+		want bool
+	}{
+		{
+			desc: "struct_comparator.IsYearEqual",
+			x:    1987,
+			y:    1986,
+			want: true,
+		},
+		{
+			desc: "struct_comparator.IsYearEqual",
+			x:    1986,
+			y:    1987,
+			want: false,
+		},
+	}
+	for _, tC := range testCasesSCIsEqual {
+		t.Run(tC.desc, func(t *testing.T) {
+			got := struct_comparator.IsYearEqual(tC.x, tC.y)
 			if got != tC.want {
 				t.Errorf("something wrong: got %v, want %v", got, tC.want)
 			}
